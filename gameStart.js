@@ -28,21 +28,26 @@ var gameState = function () {
     var max_num = 100;
     var min_num = 1;
     input_btn.onclick = function() {
-        count += 1;
         num = Number(input_num.value);
-        if (random_num == num) {
-            history.innerHTML += '<p>' + count + '회차: 정답입니다!</p>';
-        } else if (random_num > num) {
-            if (min_num <= num) {
-                min_num = num;    
+        if (num >= min_num && num <= max_num) {
+            count += 1;
+            if (random_num == num) {
+                history.innerHTML += '<p>' + count + '회차: 정답입니다!</p>';
+            } else if (random_num > num) {
+                if (min_num <= num) {
+                    min_num = num + 1;
+                }
+                history.innerHTML += '<p>' + count + '회차: Up!'+ '범위: ' + min_num + '~' + max_num;     
+            } else if (random_num < num) {
+                if (max_num >= num) {
+                    max_num = num - 1;
+                }
+                history.innerHTML += '<p>' + count + '회차: Down!' + '범위: ' + min_num + '~' + max_num;
             }
-            history.innerHTML += '<p>' + count + '회차: Up!'+ '범위: ' + min_num + '~' + max_num;     
-        } else if (random_num < num) {
-            if (max_num >= num) {
-                max_num = num;
-            }
-            history.innerHTML += '<p>' + count + '회차: Down!' + '범위: ' + min_num + '~' + max_num;
+        } else {
+            alert(min_num + '~' + max_num + '사이에 숫자를 입력하세요');
         }
+        
     }
 
     reset_btn.onclick = function() {
